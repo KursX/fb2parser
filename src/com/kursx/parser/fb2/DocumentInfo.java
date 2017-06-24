@@ -9,14 +9,18 @@ import java.util.List;
 
 public class DocumentInfo {
 
-    private List<Author> authors = new ArrayList<>();
-    private String programUsed;
-    private String srcUrl;
-    private String srcOcr;
-    private String id;
-    private String version;
-    private History history;
-    private Date date;
+    protected List<Author> authors = new ArrayList<>();
+    protected String programUsed;
+    protected String srcUrl;
+    protected String srcOcr;
+    protected String email;
+    protected String id;
+    protected String version;
+    protected History history;
+    protected Date date;
+
+    public DocumentInfo() {
+    }
 
     DocumentInfo(Document document) {
         NodeList description = document.getElementsByTagName("document-info");
@@ -31,6 +35,9 @@ public class DocumentInfo {
                         break;
                     case "program-used":
                         programUsed = node.getTextContent();
+                        break;
+                    case "email":
+                        email = node.getTextContent();
                         break;
                     case "src-url":
                         srcUrl = node.getTextContent();
@@ -85,5 +92,9 @@ public class DocumentInfo {
 
     public Date getDate() {
         return date;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

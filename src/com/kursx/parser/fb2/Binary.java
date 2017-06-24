@@ -1,20 +1,18 @@
 package com.kursx.parser.fb2;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Binary {
 
-    private String id;
-    private String contentType;
-    private String binary;
+    protected String id;
+    protected String contentType;
+    protected String binary;
 
-    public Binary(Node node) {
+    public Binary() {
+    }
+
+    Binary(Node node) {
         binary = node.getTextContent();
         NamedNodeMap map = node.getAttributes();
         for (int index = 0; index < map.getLength(); index++) {

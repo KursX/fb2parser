@@ -1,12 +1,22 @@
-# fb2parser
-Easy parser fb2 files to java objects
+# fb2parser 
+## Easy parser fb2 files into java objects 
 
-download jar/fb2parser.jar
+download jar/fb2parser.jar 
 
-Using:
+Using: 
 
+```java
 try {
-    FB2 fb2 = new FB2(new File("book.fb2"));
+	FictionBook fb2 = new FictionBook(new File("book.fb2"));
 } catch (ParserConfigurationException | IOException | SAXException e) {
-    e.printStackTrace();
+	e.printStackTrace();
 }
+```
+
+Android Gradle: 
+
+```java
+dependencies {
+	compile files('src/main/libs/fb2parser.jar')
+}
+```

@@ -1,6 +1,5 @@
 package com.kursx.parser.fb2;
 
-import com.kursx.parser.fb2.P;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -9,7 +8,12 @@ import java.util.List;
 
 public class Annotation {
 
-    private List<P> annotation = new ArrayList<>();
+    protected List<P> annotation = new ArrayList<>();
+//  TODO  http://www.fictionbook.org/index.php/Элемент_annotation
+
+
+    public Annotation() {
+    }
 
     Annotation(Node node) {
         NodeList nodeList = node.getChildNodes();
@@ -17,13 +21,13 @@ public class Annotation {
             Node paragraph = nodeList.item(i);
             switch (paragraph.getNodeName()) {
                 case "p":
-                    annotation.add(new P(paragraph.getTextContent()));
+                    annotation.add(new P(paragraph));
                     break;
             }
         }
     }
 
-    public List<P> getAnnotation() {
+    public List<P> getAnnotations() {
         return annotation;
     }
 }

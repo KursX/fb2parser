@@ -5,10 +5,14 @@ import org.w3c.dom.NodeList;
 
 public class Author {
 
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private String nickname;
+    protected String firstName;
+    protected String middleName;
+    protected String lastName;
+    protected String nickname;
+    protected String email;
+
+    public Author() {
+    }
 
     Author(NodeList nodeList) {
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -26,6 +30,9 @@ public class Author {
                 case "nickname":
                     nickname = author.getTextContent();
                     break;
+                case "email":
+                    email = author.getTextContent();
+                    break;
             }
         }
     }
@@ -42,7 +49,17 @@ public class Author {
         return lastName;
     }
 
+    public String getName() {
+        return (firstName == null ? "" : firstName) + " "
+                + (middleName == null ? "" : middleName) + " "
+                + (lastName == null ? "" : lastName);
+    }
+
     public String getNickname() {
         return nickname;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

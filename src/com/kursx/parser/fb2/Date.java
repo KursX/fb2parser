@@ -5,8 +5,11 @@ import org.w3c.dom.Node;
 
 public class Date {
 
-    private String value;
-    private String date;
+    protected String value;
+    protected String date;
+
+    public Date() {
+    }
 
     Date(Node node) {
         NamedNodeMap map = node.getAttributes();

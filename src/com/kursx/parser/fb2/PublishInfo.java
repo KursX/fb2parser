@@ -6,11 +6,15 @@ import org.w3c.dom.NodeList;
 
 public class PublishInfo {
 
-    private String bookName;
-    private String city;
-    private String year;
-    private String publisher;
-    private Sequence sequence;
+    protected String bookName;
+    protected String city;
+    protected String year;
+    protected String publisher;
+    protected String isbn;
+    protected Sequence sequence;
+
+    public PublishInfo() {
+    }
 
     PublishInfo(Document document) {
         NodeList description = document.getElementsByTagName("publish-info");
@@ -27,6 +31,9 @@ public class PublishInfo {
                         break;
                     case "year":
                         year = node.getTextContent();
+                        break;
+                    case "isbn":
+                        isbn = node.getTextContent();
                         break;
                     case "publisher":
                         publisher = node.getTextContent();
@@ -57,5 +64,9 @@ public class PublishInfo {
 
     public Sequence getSequence() {
         return sequence;
+    }
+
+    public String getIsbn() {
+        return isbn;
     }
 }

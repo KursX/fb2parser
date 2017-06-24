@@ -9,16 +9,22 @@ import java.util.List;
 
 public class TitleInfo {
 
-    private String genre;
-    private String bookTitle;
-    private String date;
-    private String lang;
-    private String srcLang;
-    private List<Author> authors = new ArrayList<>();
-    private List<Author> translators = new ArrayList<>();
-    private Annotation annotation;
-    private CoverPage coverPage;
-    private Sequence sequence;
+    protected List<String> genre = new ArrayList<>();
+//  TODO http://www.fictionbook.org/index.php/Жанры_FictionBook_2.1
+
+    protected List<String> keywords = new ArrayList<>();
+    protected String bookTitle;
+    protected String date;
+    protected String lang;
+    protected String srcLang;
+    protected List<Author> authors = new ArrayList<>();
+    protected List<Author> translators = new ArrayList<>();
+    protected Annotation annotation;
+    protected List<Image> coverPage = new ArrayList<>();
+    protected Sequence sequence;
+
+    public TitleInfo() {
+    }
 
     TitleInfo(Document document) {
         NodeList description = document.getElementsByTagName("title-info");
@@ -31,7 +37,12 @@ public class TitleInfo {
                         sequence = new Sequence(node);
                         break;
                     case "coverpage":
-                        coverPage = new CoverPage(node);
+                        NodeList images = node.getChildNodes();
+                        for (int image = 0; image < images.getLength(); image++) {
+                            if (images.item(image).getNodeName().equals("image")) {
+                                coverPage.add(new Image(images.item(image)));
+                            }
+                        }
                         break;
                     case "annotation":
                         this.annotation = new Annotation(node);
@@ -47,8 +58,11 @@ public class TitleInfo {
                         NodeList translatorsList = node.getChildNodes();
                         translators.add(new Author(translatorsList));
                         break;
+                    case "keywords":
+                        keywords.add(node.getTextContent());
+                        break;
                     case "genre":
-                        genre = node.getTextContent();
+                        genre.add(node.getTextContent());
                         break;
                     case "book-title":
                         bookTitle = node.getTextContent();
@@ -64,7 +78,7 @@ public class TitleInfo {
         }
     }
 
-    public String getGenre() {
+    public List<String> getGenres() {
         return genre;
     }
 
@@ -96,11 +110,19 @@ public class TitleInfo {
         return annotation;
     }
 
-    public CoverPage getCoverPage() {
+    public List<Image> getCoverPage() {
         return coverPage;
     }
 
     public Sequence getSequence() {
         return sequence;
+    }
+
+    public List<String> getGenre() {
+        return genre;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
     }
 }

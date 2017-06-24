@@ -4,8 +4,11 @@ import org.w3c.dom.Node;
 
 public class Xmlns {
     
-    private String name;
-    private String value;
+    protected String name;
+    protected String value;
+
+    public Xmlns() {
+    }
 
     Xmlns(Node node) {
         this.name = node.getNodeName();

@@ -1,11 +1,14 @@
 package com.kursx.parser.fb2;
 
-import com.kursx.parser.fb2.Xmlns;
 import org.w3c.dom.Node;
 
 public class Image extends Xmlns {
 
+    public Image() {
+        super();
+    }
+
     Image(Node node) {
-        super(node);
+        super(node.getAttributes().item(0));
     }
 }

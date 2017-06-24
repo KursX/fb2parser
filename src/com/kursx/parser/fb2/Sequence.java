@@ -5,7 +5,11 @@ import org.w3c.dom.Node;
 
 public class Sequence {
 
-    private String name;
+    protected String name;
+    protected String number;
+
+    public Sequence() {
+    }
 
     Sequence(Node node) {
         NamedNodeMap map = node.getAttributes();
@@ -13,11 +17,17 @@ public class Sequence {
             Node attr = map.item(index);
             if (attr.getNodeName().equals("name")) {
                 name = attr.getNodeValue();
+            } else if (attr.getNodeName().equals("number")) {
+                number = attr.getNodeValue();
             }
         }
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getNumber() {
+        return number;
     }
 }
