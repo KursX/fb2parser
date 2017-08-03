@@ -25,16 +25,20 @@ public class FictionBook {
     protected List<Body> bodies = new ArrayList<>();
     protected Map<String, Binary> binaries = new HashMap<>();
 
-    public FictionBook() {
-    }
+    public FictionBook() {}
 
-    public FictionBook(File file) throws ParserConfigurationException, IOException, SAXException {
+    public FictionBook(File file) throws ParserConfigurationException, IOException, SAXException, OutOfMemoryError {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
         InputStream inputStream = new FileInputStream(file);
         BufferedReader br = new BufferedReader(new FileReader(file));
-        String line = br.readLine();
-        String encoding = line.substring(line.indexOf("encoding=\"") + 10, line.length() - 3);
+        String encoding = "utf-8";
+        try {
+            String line = br.readLine();
+            encoding = line.substring(line.indexOf("encoding=\"") + 10, line.indexOf("\"?>"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Document doc = db.parse(new InputSource(new InputStreamReader(inputStream, encoding)));
         initXmlns(doc);
         description = new Description(doc);

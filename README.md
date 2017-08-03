@@ -1,13 +1,13 @@
-# fb2parser 
-## Easy parser fb2 files into java objects 
+# Fb2 parser
+## Simple parser of book format fb2 in java objects
 
-download jar/fb2parser.jar 
+Download [Fb2Parser.jar](https://github.com/KursX/fb2parser/raw/master/jar/fb2parser.jar)
 
 Using: 
 
 ```java
 try {
-	FictionBook fb2 = new FictionBook(new File("book.fb2"));
+    FictionBook fb2 = new FictionBook(new File("book.fb2"));
 } catch (ParserConfigurationException | IOException | SAXException e) {
 	e.printStackTrace();
 }

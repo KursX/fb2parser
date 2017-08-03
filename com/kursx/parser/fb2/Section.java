@@ -55,6 +55,9 @@ public class Section {
                 case "p":
                     paragraphs.add(new P(node));
                     break;
+                case "empty-line":
+                    paragraphs.add(new EmptyLine());
+                    break;
             }
         }
     }
