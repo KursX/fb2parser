@@ -9,7 +9,7 @@ import org.w3c.dom.NodeList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class P {
+public class P extends Element {
 
     protected String p;
 
@@ -30,15 +30,17 @@ public class P {
 //  <p>Об этом вы можете прочитать <a l:href="#n1">здесь</a>.</p>
 //  <p>text<a l:href="#n_2" type="note">[2]</a>
     public P() {
+        super();
     }
 
     public P(Image image) {
+        super();
         if (images == null) images = new ArrayList<>();
         images.add(image);
     }
 
     public P(Node p) {
-        this.p = p.getTextContent();
+        super(p);
         NodeList nodeList = p.getChildNodes();
         for (int index = 0; index < nodeList.getLength(); index++) {
             Node node = nodeList.item(index);
@@ -59,11 +61,15 @@ public class P {
                     if (emphasis == null) emphasis = new ArrayList<>();
                     emphasis.add(new Emphasis(node.getTextContent(), p.getTextContent()));
                     break;
+                case "subtitle":
+                    if (emphasis == null) emphasis = new ArrayList<>();
+                    emphasis.add(new Emphasis(node.getTextContent(), p.getTextContent()));
+                    break;
             }
         }
     }
 
-    public String getP() {
+    public String getText() {
         return p;
     }
 

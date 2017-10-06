@@ -1,6 +1,8 @@
 package com.kursx.parser.fb2;
 
+import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -13,12 +15,19 @@ public class Body {
     protected Title title;
     protected Image image;
     protected List<Section> sections = new ArrayList<>();
-    protected List<Epigraph> epigraphs = new ArrayList<>();
+    protected List<Epigraph> epigraphs;
 
     public Body() {
     }
 
     Body(Node body) {
+        NamedNodeMap attrs = body.getAttributes();
+        for (int index = 0; index < attrs.getLength(); index++) {
+            Node attr = attrs.item(index);
+            if (attr.getNodeName().equals("name")) {
+                name = attr.getNodeValue();
+            }
+        }
         NodeList map = body.getChildNodes();
         for (int index = 0; index < map.getLength(); index++) {
             Node node = map.item(index);
@@ -36,35 +45,35 @@ public class Body {
                     image = new Image(node);
                     break;
                 case "epigraph":
+                    if (epigraphs == null) epigraphs = new ArrayList<>();
                     epigraphs.add(new Epigraph(node));
                     break;
             }
         }
     }
 
+    @NotNull
     public List<Section> getSections() {
         return sections;
     }
 
-    public
     @Nullable
-    Title getTitle() {
+    public Title getTitle() {
         return title;
     }
 
+    @Nullable
     public List<Epigraph> getEpigraphs() {
         return epigraphs;
     }
 
-    public
     @Nullable
-    Image getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public
     @Nullable
-    String getName() {
+    public String getName() {
         return name;
     }
 }

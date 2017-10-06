@@ -10,10 +10,8 @@ import java.util.List;
 public class Epigraph {
 
     protected String id;
-    protected List<P> paragraphs = new ArrayList<>();
-    protected String textAuthor;
-
-// TODO http://www.fictionbook.org/index.php/Элемент_text-author
+    protected List<Element> elements = new ArrayList<>();
+    protected List<TextAuthor> textAuthor = new ArrayList<>();
 
     public Epigraph() {
     }
@@ -30,11 +28,18 @@ public class Epigraph {
         for (int item = 0; item < body.getLength(); item++) {
             Node node = body.item(item);
             switch (node.getNodeName()) {
-                case "p":
-                    paragraphs.add(new P(node));
-                    break;
                 case "text-author":
-                    textAuthor = node.getTextContent();
+                    if (textAuthor == null) textAuthor = new ArrayList<>();
+                    textAuthor.add(new TextAuthor(node));
+                    break;
+                case "poem":
+                    elements.add(new Poem(node));
+                    break;
+                case "cite":
+                    elements.add(new Cite(node));
+                    break;
+                case "p":
+                    elements.add(new P(node));
                     break;
             }
         }
@@ -44,11 +49,23 @@ public class Epigraph {
         return id;
     }
 
-    public List<P> getParagraphs() {
-        return paragraphs;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getTextAuthor() {
+    public List<Element> getElements() {
+        return elements;
+    }
+
+    public void setElements(List<Element> elements) {
+        this.elements = elements;
+    }
+
+    public List<TextAuthor> getTextAuthor() {
         return textAuthor;
+    }
+
+    public void setTextAuthor(List<TextAuthor> textAuthor) {
+        this.textAuthor = textAuthor;
     }
 }

@@ -1,5 +1,6 @@
 package com.kursx.parser.fb2;
 
+import com.sun.istack.internal.NotNull;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -25,6 +26,7 @@ public class Title {
         }
     }
 
+    @NotNull
     public List<P> getParagraphs() {
         return paragraphs;
     }

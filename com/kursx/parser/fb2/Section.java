@@ -2,7 +2,6 @@ package com.kursx.parser.fb2;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -13,14 +12,12 @@ import java.util.List;
 public class Section {
 
     protected String id;
-    protected Title title;
     protected Image image;
     protected Annotation annotation;
-    protected List<Epigraph> epigraphs = new ArrayList<>();
-    protected List<Section> sections = new ArrayList<>();
-    protected List<P> paragraphs = new ArrayList<>();
-
-//    <section id="litres_trial_promo">
+    protected List<Epigraph> epigraphs;
+    protected List<Section> sections;
+    protected List<Element> elements = new ArrayList<>();
+    protected List<Title> title;
 
     public Section() {
     }
@@ -37,26 +34,42 @@ public class Section {
         for (int item = 0; item < body.getLength(); item++) {
             Node node = body.item(item);
             switch (node.getNodeName()) {
+                case "title":
+                    if (title == null) title = new ArrayList<>();
+                    title.add(new Title(node));
+                    break;
                 case "annotation":
                     annotation = new Annotation(node);
                     break;
                 case "image":
-                    paragraphs.add(new P(new Image(node)));
+                    if (elements.isEmpty()) {
+                        image = new Image(node);
+                    } else {
+                        elements.add(new P(new Image(node)));
+                    }
                     break;
                 case "epigraph":
+                    if (epigraphs == null) epigraphs = new ArrayList<>();
                     epigraphs.add(new Epigraph(node));
                     break;
-                case "title":
-                    title = new Title(node);
-                    break;
                 case "section":
+                    if (sections == null) sections = new ArrayList<>();
                     sections.add(new Section(node));
                     break;
+                case "poem":
+                    elements.add(new Poem(node));
+                    break;
+                case "subtitle":
+                    elements.add(new Subtitle(node));
+                    break;
                 case "p":
-                    paragraphs.add(new P(node));
+                    elements.add(new P(node));
                     break;
                 case "empty-line":
-                    paragraphs.add(new EmptyLine());
+                    elements.add(new EmptyLine());
+                    break;
+                case "cite":
+                    elements.add(new Cite(node));
                     break;
             }
         }
@@ -66,7 +79,7 @@ public class Section {
         return id;
     }
 
-    public @Nullable Title getTitle() {
+    public @Nullable List<Title> getTitle() {
         return title;
     }
 
@@ -74,8 +87,8 @@ public class Section {
         return sections;
     }
 
-    public @NotNull List<P> getParagraphs() {
-        return paragraphs;
+    public @NotNull List<Element> getElements() {
+        return elements;
     }
 
     public @Nullable Image getImage() {
@@ -96,10 +109,30 @@ public class Section {
 
     public String getTitleString(String divider) {
         String value = "";
-        if (paragraphs.size() == 0) return value;
-        for (P p : paragraphs) {
-            value += p.getP() + divider;
+        List<Element> list = new ArrayList<>();
+        for (Title title1 : title) {
+            list.addAll(title1.getParagraphs());
         }
-        return value.substring(0, value.length() - divider.length());
+        return Element.getText(list, divider);
+    }
+
+    public void setElements(List<Element> elements) {
+        this.elements = elements;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
+    }
+
+    @Override
+    public String toString() {
+        String data = getTitleString(". ");
+        if (elements.size() > 0) {
+            data += " p: " + elements.size();
+        }
+        if (sections.size() > 0) {
+            data += " section: " + sections.size();
+        }
+        return data.trim();
     }
 }

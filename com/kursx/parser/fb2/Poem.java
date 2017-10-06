@@ -6,14 +6,13 @@ import org.w3c.dom.NodeList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Poem {
+public class Poem extends Element {
 
     protected Title title;
-    protected List<Epigraph> epigraphs = new ArrayList<>();
+    protected List<Epigraph> epigraphs;
+    protected List<Stanza> stanza = new ArrayList<>();
     protected String textAuthor;
     protected String date;
-
-//    TODO http://www.fictionbook.org/index.php/Элемент_poem
 
     public Poem() {
     }
@@ -30,10 +29,14 @@ public class Poem {
                     title = new Title(paragraph);
                     break;
                 case "epigraph":
+                    if (epigraphs == null) epigraphs = new ArrayList<>();
                     epigraphs.add(new Epigraph(paragraph));
                     break;
                 case "date":
                     date = paragraph.getTextContent();
+                    break;
+                case "stanza":
+                    stanza.add(new Stanza(paragraph));
                     break;
             }
         }
@@ -55,5 +58,17 @@ public class Poem {
         return date;
     }
 
-    //    Строфы <stanza>. Одно или более вхождений. Строфа <stanza> - это группа строк стихотворения, отделенная пустым промежутком от остальных строк. Отдельная строка стихотворения помечается тэгом <v>, который должен быть вложен в <stanza>. Кроме того в состав <stanza> могут входить тэги <title> (заголовок) и <subtitle> (подзаголовок).
+    @Override
+    public String getText() {
+        List<Element> list = new ArrayList<>();
+        if (title != null) list.addAll(title.getParagraphs());
+        for (Stanza stanza1 : stanza) {
+            for (Title title1 : stanza1.getTitle()) {
+                list.addAll(title1.getParagraphs());
+            }
+
+            list.addAll(stanza1.getStanza());
+        }
+        return Element.getText(list, "\n");
+    }
 }
