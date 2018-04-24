@@ -1,10 +1,8 @@
 package com.kursx.parser.fb2;
 
-public class EmptyLine extends P {
-
-
+public class EmptyLine extends Element {
 
     public EmptyLine() {
-        p = "";
+        text = "";
     }
 }

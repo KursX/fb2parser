@@ -5,11 +5,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Title {
 
-    protected List<P> paragraphs = new ArrayList<>();
+    protected ArrayList<P> paragraphs = new ArrayList<>();
 
     public Title() {
     }
@@ -27,7 +26,7 @@ public class Title {
     }
 
     @NotNull
-    public List<P> getParagraphs() {
+    public ArrayList<P> getParagraphs() {
         return paragraphs;
     }
 }

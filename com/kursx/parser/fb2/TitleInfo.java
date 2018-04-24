@@ -5,22 +5,21 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TitleInfo {
 
-    protected List<String> genre = new ArrayList<>();
+    protected ArrayList<String> genre = new ArrayList<>();
 //  TODO http://www.fictionbook.org/index.php/Жанры_FictionBook_2.1
 
-    protected List<String> keywords = new ArrayList<>();
+    protected ArrayList<String> keywords = new ArrayList<>();
     protected String bookTitle;
     protected String date;
     protected String lang;
     protected String srcLang;
-    protected List<Author> authors = new ArrayList<>();
-    protected List<Author> translators = new ArrayList<>();
+    protected ArrayList<Person> authors = new ArrayList<>();
+    protected ArrayList<Person> translators = new ArrayList<>();
     protected Annotation annotation;
-    protected List<Image> coverPage = new ArrayList<>();
+    protected ArrayList<Image> coverPage = new ArrayList<>();
     protected Sequence sequence;
 
     public TitleInfo() {
@@ -44,19 +43,17 @@ public class TitleInfo {
                             }
                         }
                         break;
-                    case "annotation":
+                    case "elements":
                         this.annotation = new Annotation(node);
                         break;
                     case "date":
                         date = node.getTextContent();
                         break;
                     case "author":
-                        NodeList authorsList = node.getChildNodes();
-                        authors.add(new Author(authorsList));
+                        authors.add(new Person(node));
                         break;
                     case "translator":
-                        NodeList translatorsList = node.getChildNodes();
-                        translators.add(new Author(translatorsList));
+                        translators.add(new Person(node));
                         break;
                     case "keywords":
                         keywords.add(node.getTextContent());
@@ -78,7 +75,7 @@ public class TitleInfo {
         }
     }
 
-    public List<String> getGenres() {
+    public ArrayList<String> getGenres() {
         return genre;
     }
 
@@ -98,11 +95,11 @@ public class TitleInfo {
         return srcLang;
     }
 
-    public List<Author> getAuthors() {
+    public ArrayList<Person> getAuthors() {
         return authors;
     }
 
-    public List<Author> getTranslators() {
+    public ArrayList<Person> getTranslators() {
         return translators;
     }
 
@@ -110,7 +107,7 @@ public class TitleInfo {
         return annotation;
     }
 
-    public List<Image> getCoverPage() {
+    public ArrayList<Image> getCoverPage() {
         return coverPage;
     }
 
@@ -118,11 +115,15 @@ public class TitleInfo {
         return sequence;
     }
 
-    public List<String> getGenre() {
+    public ArrayList<String> getGenre() {
         return genre;
     }
 
-    public List<String> getKeywords() {
+    public ArrayList<String> getKeywords() {
         return keywords;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 }

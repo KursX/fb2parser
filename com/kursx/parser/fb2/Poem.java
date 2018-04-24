@@ -4,13 +4,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Poem extends Element {
 
     protected Title title;
-    protected List<Epigraph> epigraphs;
-    protected List<Stanza> stanza = new ArrayList<>();
+    protected ArrayList<Epigraph> epigraphs;
+    protected ArrayList<Stanza> stanza = new ArrayList<>();
     protected String textAuthor;
     protected String date;
 
@@ -46,7 +45,7 @@ public class Poem extends Element {
         return title;
     }
 
-    public List<Epigraph> getEpigraphs() {
+    public ArrayList<Epigraph> getEpigraphs() {
         return epigraphs;
     }
 
@@ -60,13 +59,14 @@ public class Poem extends Element {
 
     @Override
     public String getText() {
-        List<Element> list = new ArrayList<>();
+        ArrayList<Element> list = new ArrayList<>();
         if (title != null) list.addAll(title.getParagraphs());
         for (Stanza stanza1 : stanza) {
-            for (Title title1 : stanza1.getTitle()) {
-                list.addAll(title1.getParagraphs());
+            if (stanza1.getTitle() != null) {
+                for (Title title1 : stanza1.getTitle()) {
+                    if (title1 != null) list.addAll(title1.getParagraphs());
+                }
             }
-
             list.addAll(stanza1.getStanza());
         }
         return Element.getText(list, "\n");

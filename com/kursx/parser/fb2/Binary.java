@@ -1,11 +1,13 @@
 package com.kursx.parser.fb2;
 
+import com.sun.istack.internal.NotNull;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-public class Binary {
+//http://www.fictionbook.org/index.php/Элемент_binary
+public class Binary extends IdElement {
 
-    protected String id;
     protected String contentType;
     protected String binary;
 
@@ -13,14 +15,12 @@ public class Binary {
     }
 
     Binary(Node node) {
+        super(node);
         binary = node.getTextContent();
         NamedNodeMap map = node.getAttributes();
         for (int index = 0; index < map.getLength(); index++) {
             Node attr = map.item(index);
             switch (attr.getNodeName()) {
-                case "id":
-                    id = attr.getNodeValue();
-                    break;
                 case "content-type":
                     contentType = attr.getNodeValue();
                     break;
@@ -28,15 +28,26 @@ public class Binary {
         }
     }
 
-    public String getId() {
-        return id;
-    }
-
     public String getContentType() {
         return contentType;
     }
 
+    @NotNull
     public String getBinary() {
         return binary;
+    }
+
+    @NotNull
+    @Override
+    public String getId() {
+        return super.getId();
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public void setBinary(String binary) {
+        this.binary = binary;
     }
 }

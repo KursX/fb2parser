@@ -2,7 +2,7 @@ package com.kursx.parser.fb2;
 
 import org.w3c.dom.Node;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Element {
 
@@ -20,11 +20,12 @@ public class Element {
         return text;
     }
 
-    public static String getText(List<Element> list, String divider) {
-        String text = "";
+    public static String getText(ArrayList<Element> list, String divider) {
+        StringBuilder text = new StringBuilder();
         for (Element p : list) {
-            text += p.getText() + divider;
+            text.append(p.getText()).append(divider);
         }
-        return text.trim();
+        if (text.length() <= divider.length()) return "";
+        return text.substring(0, text.length() - divider.length()).trim();
     }
 }

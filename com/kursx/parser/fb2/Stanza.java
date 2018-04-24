@@ -4,12 +4,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Stanza {
 
-    private List<Title> title;
-    private List<Element> stanza;
+    private ArrayList<Title> title;
+    private ArrayList<Element> stanza;
 
     Stanza(Node node) {
         NodeList nodeList = node.getChildNodes();
@@ -32,19 +31,19 @@ public class Stanza {
         }
     }
 
-    public List<Title> getTitle() {
-        return title;
+    public ArrayList<Title> getTitle() {
+        return title == null ? new ArrayList<Title>() : title;
     }
 
-    public void setTitle(List<Title> title) {
+    public void setTitle(ArrayList<Title> title) {
         this.title = title;
     }
 
-    public List<Element> getStanza() {
-        return stanza;
+    public ArrayList<Element> getStanza() {
+        return stanza == null ? new ArrayList<Element>() : stanza;
     }
 
-    public void setStanza(List<Element> stanza) {
+    public void setStanza(ArrayList<Element> stanza) {
         this.stanza = stanza;
     }
 }

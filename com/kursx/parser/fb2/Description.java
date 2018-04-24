@@ -3,7 +3,6 @@ package com.kursx.parser.fb2;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Description {
 
@@ -11,7 +10,7 @@ public class Description {
     protected SrcTitleInfo srcTitleInfo;
     protected DocumentInfo documentInfo;
     protected PublishInfo publishInfo;
-    protected List<CustomInfo> customInfo = new ArrayList<>();
+    protected ArrayList<CustomInfo> customInfo = new ArrayList<>();
 
     public Description() {
     }
@@ -39,7 +38,7 @@ public class Description {
         return srcTitleInfo;
     }
 
-    public List<CustomInfo> getCustomInfo() {
+    public ArrayList<CustomInfo> getCustomInfo() {
         return customInfo;
     }
 }

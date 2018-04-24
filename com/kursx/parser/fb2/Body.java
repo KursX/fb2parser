@@ -2,20 +2,22 @@ package com.kursx.parser.fb2;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.List;
 
+//http://www.fictionbook.org/index.php/Элемент_body
 public class Body {
 
+    protected String lang;
     protected String name;
     protected Title title;
     protected Image image;
-    protected List<Section> sections = new ArrayList<>();
-    protected List<Epigraph> epigraphs;
+    protected ArrayList<Section> sections = new ArrayList<>();
+    protected ArrayList<Epigraph> epigraphs;
 
     public Body() {
     }
@@ -26,6 +28,9 @@ public class Body {
             Node attr = attrs.item(index);
             if (attr.getNodeName().equals("name")) {
                 name = attr.getNodeValue();
+            }
+            if (attr.getNodeName().equals("xml:lang")) {
+                lang = attr.getNodeValue();
             }
         }
         NodeList map = body.getChildNodes();
@@ -53,7 +58,7 @@ public class Body {
     }
 
     @NotNull
-    public List<Section> getSections() {
+    public ArrayList<Section> getSections() {
         return sections;
     }
 
@@ -63,7 +68,7 @@ public class Body {
     }
 
     @Nullable
-    public List<Epigraph> getEpigraphs() {
+    public ArrayList<Epigraph> getEpigraphs() {
         return epigraphs;
     }
 
@@ -75,5 +80,34 @@ public class Body {
     @Nullable
     public String getName() {
         return name;
+    }
+
+    @Nullable
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTitle(Title title) {
+        this.title = title;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public void setSections(ArrayList<Section> sections) {
+        this.sections = sections;
+    }
+
+    public void setEpigraphs(ArrayList<Epigraph> epigraphs) {
+        this.epigraphs = epigraphs;
     }
 }

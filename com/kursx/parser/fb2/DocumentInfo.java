@@ -5,11 +5,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DocumentInfo {
 
-    protected List<Author> authors = new ArrayList<>();
+    protected ArrayList<Person> authors = new ArrayList<>();
+    protected ArrayList<Person> publishers;
     protected String programUsed;
     protected String srcUrl;
     protected String srcOcr;
@@ -30,8 +30,11 @@ public class DocumentInfo {
                 Node node = map.item(index);
                 switch (node.getNodeName()) {
                     case "author":
-                        NodeList authorsList = node.getChildNodes();
-                        authors.add(new Author(authorsList));
+                        authors.add(new Person(node));
+                        break;
+                    case "publisher":
+                        if (publishers == null) publishers = new ArrayList<>();
+                        publishers.add(new Person(node));
                         break;
                     case "program-used":
                         programUsed = node.getTextContent();
@@ -62,7 +65,7 @@ public class DocumentInfo {
         }
     }
 
-    public List<Author> getAuthors() {
+    public ArrayList<Person> getAuthors() {
         return authors;
     }
 

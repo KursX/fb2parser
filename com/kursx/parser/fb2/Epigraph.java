@@ -5,13 +5,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Epigraph {
+public class Epigraph extends IdElement {
 
-    protected String id;
-    protected List<Element> elements = new ArrayList<>();
-    protected List<TextAuthor> textAuthor = new ArrayList<>();
+    protected ArrayList<Element> elements = new ArrayList<>();
+    protected ArrayList<TextAuthor> textAuthor = new ArrayList<>();
 
     public Epigraph() {
     }
@@ -45,27 +43,19 @@ public class Epigraph {
         }
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public List<Element> getElements() {
+    public ArrayList<Element> getElements() {
         return elements;
     }
 
-    public void setElements(List<Element> elements) {
+    public void setElements(ArrayList<Element> elements) {
         this.elements = elements;
     }
 
-    public List<TextAuthor> getTextAuthor() {
+    public ArrayList<TextAuthor> getTextAuthor() {
         return textAuthor;
     }
 
-    public void setTextAuthor(List<TextAuthor> textAuthor) {
+    public void setTextAuthor(ArrayList<TextAuthor> textAuthor) {
         this.textAuthor = textAuthor;
     }
 }

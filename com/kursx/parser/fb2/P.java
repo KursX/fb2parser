@@ -11,12 +11,10 @@ import java.util.List;
 
 public class P extends Element {
 
-    protected String p;
-
-    protected List<Image> images;
-    protected List<Emphasis> emphasis;
-    protected List<Strong> strong;
-    protected List<StrikeThrough> strikeThrough;
+    protected ArrayList<Image> images;
+    protected ArrayList<Emphasis> emphasis;
+    protected ArrayList<Strong> strong;
+    protected ArrayList<StrikeThrough> strikeThrough;
 //    TODO
 //    Для нижних индексов <sub>, а для верхних индексов <sup>
 //    Программный код - <code>
@@ -69,11 +67,7 @@ public class P extends Element {
         }
     }
 
-    public String getText() {
-        return p;
-    }
-
-    public List<Image> getImages() {
+    public ArrayList<Image> getImages() {
         return images;
     }
 }
