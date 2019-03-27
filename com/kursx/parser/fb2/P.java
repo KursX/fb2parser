@@ -7,7 +7,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class P extends Element {
 
@@ -65,6 +64,10 @@ public class P extends Element {
                     break;
             }
         }
+    }
+
+    public P(String p) {
+        super(p);
     }
 
     public ArrayList<Image> getImages() {

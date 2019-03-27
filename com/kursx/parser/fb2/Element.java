@@ -16,6 +16,10 @@ public class Element {
         text = p.getTextContent();
     }
 
+    public Element(String p) {
+        text = p;
+    }
+
     public String getText() {
         return text;
     }

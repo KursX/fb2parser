@@ -2,7 +2,6 @@ package com.kursx.parser.fb2;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import jdk.internal.util.xml.impl.Parser;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -14,10 +13,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
 import java.util.*;
 
 public class FictionBook {
@@ -27,6 +22,8 @@ public class FictionBook {
     protected List<Body> bodies = new ArrayList<>();
     protected Map<String, Binary> binaries;
 
+    public String encoding = "utf-8";
+
     public FictionBook() {}
 
     public FictionBook(File file) throws ParserConfigurationException, IOException, SAXException, OutOfMemoryError {
@@ -34,7 +31,6 @@ public class FictionBook {
         DocumentBuilder db = dbf.newDocumentBuilder();
         InputStream inputStream = new FileInputStream(file);
         BufferedReader br = new BufferedReader(new FileReader(file));
-        String encoding = "utf-8";
         boolean foundIllegalCharacters = false;
         try {
             String line = br.readLine().trim();

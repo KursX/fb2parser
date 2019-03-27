@@ -14,7 +14,7 @@ public class Section extends IdElement {
     protected ArrayList<Epigraph> epigraphs;
     protected ArrayList<Section> sections;
     protected ArrayList<Element> elements;
-    protected ArrayList<Title> titles;
+    protected Title title;
 
     public Section() {
     }
@@ -26,8 +26,7 @@ public class Section extends IdElement {
             Node node = body.item(item);
             switch (node.getNodeName()) {
                 case "title":
-                    if (titles == null) titles = new ArrayList<>();
-                    titles.add(new Title(node));
+                    title = new Title(node);
                     break;
                 case "elements":
                     annotation = new Annotation(node);
@@ -69,8 +68,8 @@ public class Section extends IdElement {
     }
 
     @NotNull
-    public ArrayList<Title> getTitles() {
-        return titles == null ? new ArrayList<Title>() : titles;
+    public Title getTitle() {
+        return title;
     }
 
     @NotNull
@@ -99,13 +98,10 @@ public class Section extends IdElement {
     }
 
     public String getTitleString(String innerDivider, String outerDivider) {
-        if (titles == null) return "";
+        if (title == null) return "";
         StringBuilder builder = new StringBuilder();
-        for (Title title : titles) {
-            ArrayList<Element> list = new ArrayList<>();
-            list.addAll(title.getParagraphs());
-            builder.append(Element.getText(list, innerDivider)).append(outerDivider);
-        }
+        ArrayList<Element> list = new ArrayList<>(title.getParagraphs());
+        builder.append(Element.getText(list, innerDivider)).append(outerDivider);
         return builder.substring(0, builder.length() - outerDivider.length());
     }
 
@@ -129,8 +125,8 @@ public class Section extends IdElement {
         this.epigraphs = epigraphs;
     }
 
-    public void setTitles(ArrayList<Title> titles) {
-        this.titles = titles;
+    public void setTitle(Title title) {
+        this.title = title;
     }
 
     @Override
